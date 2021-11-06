@@ -73,3 +73,7 @@ sh get-docker.sh
 systemctl enable docker
 rm -f get-docker.sh
 EOF
+
+on_chroot << EOF
+pip3 install docker-compose
+EOF
