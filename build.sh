@@ -267,6 +267,7 @@ export NO_PRERUN_QCOW2="${NO_PRERUN_QCOW2:-1}"
 dependencies_check "${BASE_DIR}/depends"
 
 export NODE_ETH_ADDRESS
+export PARITY
 
 #check username is valid
 if [[ ! "$FIRST_USER_NAME" =~ ^[a-z][-a-z0-9_]*$ ]]; then
