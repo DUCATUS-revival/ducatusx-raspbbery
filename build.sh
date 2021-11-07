@@ -268,6 +268,7 @@ dependencies_check "${BASE_DIR}/depends"
 
 export NODE_ETH_ADDRESS
 export PARITY
+export IS_TESTNET="${IS_TESTNET:-0}"
 
 #check username is valid
 if [[ ! "$FIRST_USER_NAME" =~ ^[a-z][-a-z0-9_]*$ ]]; then

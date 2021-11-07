@@ -66,14 +66,3 @@ usermod --pass='*' root
 EOF
 
 rm -f "${ROOTFS_DIR}/etc/ssh/"ssh_host_*_key*
-
-on_chroot << EOF
-curl -fsSL https://get.docker.com -o get-docker.sh
-sh get-docker.sh
-systemctl enable docker
-rm -f get-docker.sh
-EOF
-
-on_chroot << EOF
-pip3 install docker-compose
-EOF
