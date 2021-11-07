@@ -31,5 +31,3 @@ ntfs-3g
 pciutils
 rpi-eeprom
 raspinfo
-python3-pip
-libffi-dev
