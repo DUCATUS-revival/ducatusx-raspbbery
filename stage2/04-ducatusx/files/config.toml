@@ -1,0 +1,36 @@
+[parity]
+base_path = "/etc/parity"
+chain = "/etc/parity/spec.json"
+db_path = "/etc/parity/chains"
+keys_path = "/etc/parity/keys"
+identity = ""
+light = false
+
+[network]
+allow_ips = "public"
+port = 30300
+
+[rpc]
+interface = "all"
+cors = ["all"]
+port = 8545
+apis = ["web3", "eth", "net", "personal", "parity", "parity_pubsub", "shh", "shh_pubsub", "parity_set", "traces", "rpc", "parity_accounts", "pubsub"]
+
+[websockets]
+apis = ["web3", "eth", "net", "personal", "parity", "parity_set", "traces", "rpc", "parity_accounts", "pubsub"]
+disable = false
+interface = "all"
+max_connections = 10000
+port = 8455
+
+[footprint]
+db_compaction = "hdd"
+fat_db = "on"
+
+[ipc]
+disable = false
+
+[misc]
+logging = "own_tx=trace"
+log_file = "/etc/parity/debug.log"
+color = true
