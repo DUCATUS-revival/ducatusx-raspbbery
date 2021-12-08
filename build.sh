@@ -311,9 +311,9 @@ done
 
 PARITY_PRIVATE_KEYS_ARRAY=($PARITY_PRIVATE_KEYS)
 
-for (( i = 0; i < "${#PARITY_PRIVATE_KEYS_ARRAY[@]}"; ++i )); do
-    PARITY_PRIVATE_KEY_NUM=$i
-	PARITY_PRIVATE_KEY="${PARITY_PRIVATE_KEYS_ARRAY[$i]}"
+for (( j = 0; j < "${#PARITY_PRIVATE_KEYS_ARRAY[@]}"; ++j )); do
+    PARITY_PRIVATE_KEY_NUM=$j
+	PARITY_PRIVATE_KEY="${PARITY_PRIVATE_KEYS_ARRAY[$j]}"
 	STAGE_DIR=$(realpath "private-key")
 	run_stage
 done
