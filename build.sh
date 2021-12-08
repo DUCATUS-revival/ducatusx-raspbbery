@@ -306,21 +306,23 @@ for STAGE_DIR in $STAGE_LIST; do
 done
 
 PARITY_PRIVATE_KEYS_ARRAY=($PARITY_PRIVATE_KEYS)
-CLEAN=1
 
 for (( j = 0; j < "${#PARITY_PRIVATE_KEYS_ARRAY[@]}"; ++j )); do
     PARITY_PRIVATE_KEY_NUM=$j
 	PARITY_PRIVATE_KEY="${PARITY_PRIVATE_KEYS_ARRAY[$j]}"
 	STAGE_DIR=$(realpath "private-key")
+	CLEAN=1
 	run_stage
 	EXPORT_DIR="${STAGE_DIR}"
 	ZIP_FILENAME="parity-${PARITY_PRIVATE_KEY_NUM}"
 	IMG_FILENAME="parity-${PARITY_PRIVATE_KEY_NUM}"
 	STAGE_DIR="${BASE_DIR}/export-image"
 	EXPORT_ROOTFS_DIR=${WORK_DIR}/$(basename "${EXPORT_DIR}")/rootfs
+	CLEAN=0
 	run_stage
 done
 
+CLEAN=1
 for EXPORT_DIR in ${EXPORT_DIRS}; do
 	STAGE_DIR=${BASE_DIR}/export-image
 	# shellcheck source=/dev/null
