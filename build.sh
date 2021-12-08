@@ -316,6 +316,7 @@ for (( j = 0; j < "${#PARITY_PRIVATE_KEYS_ARRAY[@]}"; ++j )); do
 	ZIP_FILENAME="parity-${PARITY_PRIVATE_KEY_NUM}"
 	EXPORT_DIR="${STAGE_DIR}"
 	STAGE_DIR="${BASE_DIR}/export-image"
+	EXPORT_ROOTFS_DIR=${WORK_DIR}/$(basename "${EXPORT_DIR}")/rootfs
 	run_stage
 done
 
