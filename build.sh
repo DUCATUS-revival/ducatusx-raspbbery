@@ -96,11 +96,7 @@ run_stage(){
 
 	pushd "${STAGE_DIR}" > /dev/null
 
-	if [ "${STAGE}" = "private-key" ]; then
-		STAGE_WORK_DIR="${WORK_DIR}/${STAGE}-${PARITY_PRIVATE_KEY_NUM}" 
-	else
-		STAGE_WORK_DIR="${WORK_DIR}/${STAGE}"
-	fi
+	STAGE_WORK_DIR="${WORK_DIR}/${STAGE}"
 
 	ROOTFS_DIR="${STAGE_WORK_DIR}"/rootfs
 
@@ -116,12 +112,8 @@ run_stage(){
 	fi
 	
 	if [ ! -f SKIP_IMAGES ]; then
-		if [ -f "${STAGE_DIR}/EXPORT_IMAGE" ]; then
-			if [ "${STAGE}" = "private-key" ]; then
-				EXPORT_DIRS="${EXPORT_DIRS} ${STAGE_DIR}-${PARITY_PRIVATE_KEY_NUM}"
-			else
-				EXPORT_DIRS="${EXPORT_DIRS} ${STAGE_DIR}"
-			fi
+		if [ -f "${STAGE_DIR}/EXPORT_IMAGE" ] && [ "${STAGE}" != "private-key" ] ; then
+			EXPORT_DIRS="${EXPORT_DIRS} ${STAGE_DIR}"
 		fi
 	fi
 	if [ ! -f SKIP ]; then
