@@ -311,6 +311,7 @@ for (( j = 0; j < "${#PARITY_PRIVATE_KEYS_ARRAY[@]}"; ++j )); do
     PARITY_PRIVATE_KEY_NUM=$j
 	PARITY_PRIVATE_KEY="${PARITY_PRIVATE_KEYS_ARRAY[$j]}"
 	STAGE_DIR=$(realpath "private-key")
+	ZIP_FILENAME="parity-${PARITY_PRIVATE_KEY_NUM}"
 	run_stage
 done
 
