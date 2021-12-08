@@ -142,8 +142,8 @@ run_stage(){
 			unmount "${WORK_DIR}/${STAGE}"
 		fi
 	fi
-
-	if [ "${STAGE}" != "private-key" ]; then
+	
+	if [ "${STAGE}" != $(realpath "private-key") ]; then
 		PREV_STAGE="${STAGE}"
 		PREV_STAGE_DIR="${STAGE_DIR}"
 		PREV_ROOTFS_DIR="${ROOTFS_DIR}"
@@ -314,11 +314,13 @@ for (( j = 0; j < "${#PARITY_PRIVATE_KEYS_ARRAY[@]}"; ++j )); do
 	CLEAN=1
 	run_stage
 	EXPORT_DIR="${STAGE_DIR}"
-	ZIP_FILENAME="parity-${PARITY_PRIVATE_KEY_NUM}"
-	IMG_FILENAME="parity-${PARITY_PRIVATE_KEY_NUM}"
+	
 	STAGE_DIR="${BASE_DIR}/export-image"
 	EXPORT_ROOTFS_DIR=${WORK_DIR}/$(basename "${EXPORT_DIR}")/rootfs
+
 	CLEAN=0
+	ZIP_FILENAME="parity-${PARITY_PRIVATE_KEY_NUM}"
+	IMG_FILENAME="parity-${PARITY_PRIVATE_KEY_NUM}"
 	run_stage
 done
 
