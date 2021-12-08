@@ -96,7 +96,12 @@ run_stage(){
 
 	pushd "${STAGE_DIR}" > /dev/null
 
-	STAGE_WORK_DIR="${WORK_DIR}/${STAGE}"
+	if [ "${STAGE_DIR}" = "private-key" ]; then
+		STAGE_WORK_DIR="${WORK_DIR}/${STAGE}-${PRIVATE_KEY_NUM}" 
+	else
+		STAGE_WORK_DIR="${WORK_DIR}/${STAGE}"
+	fi
+
 	ROOTFS_DIR="${STAGE_WORK_DIR}"/rootfs
 
 	if [ "${USE_QCOW2}" = "1" ]; then 
@@ -142,9 +147,11 @@ run_stage(){
 		fi
 	fi
 
-	PREV_STAGE="${STAGE}"
-	PREV_STAGE_DIR="${STAGE_DIR}"
-	PREV_ROOTFS_DIR="${ROOTFS_DIR}"
+	if [ "${STAGE_DIR}" != "private-key" ]; then
+		PREV_STAGE="${STAGE}"
+		PREV_STAGE_DIR="${STAGE_DIR}"
+		PREV_ROOTFS_DIR="${ROOTFS_DIR}"
+	fi
 	popd > /dev/null
 	log "End ${STAGE_DIR}"
 }
@@ -298,6 +305,15 @@ STAGE_LIST=${STAGE_LIST:-${BASE_DIR}/stage*}
 
 for STAGE_DIR in $STAGE_LIST; do
 	STAGE_DIR=$(realpath "${STAGE_DIR}")
+	run_stage
+done
+
+PARITY_PRIVATE_KEYS_ARRAY=($PARITY_PRIVATE_KEYS)
+
+for (( i = 0; i < "${#PARITY_PRIVATE_KEYS_ARRAY[@]}"; ++i )); do
+    PARITY_PRIVATE_KEY_NUM=$i
+	PARITY_PRIVATE_KEY=$i
+	STAGE_DIR="private-key"
 	run_stage
 done
 
