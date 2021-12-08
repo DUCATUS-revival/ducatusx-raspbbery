@@ -275,6 +275,7 @@ dependencies_check "${BASE_DIR}/depends"
 
 export PARITY_PRIVATE_KEY
 export PARITY_PATH_LOCAL
+export PRIVATE_KEY_NUM
 export IS_TESTNET="${IS_TESTNET:-0}"
 
 #check username is valid
