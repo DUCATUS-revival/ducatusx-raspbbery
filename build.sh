@@ -96,7 +96,7 @@ run_stage(){
 
 	pushd "${STAGE_DIR}" > /dev/null
 
-	if [ "${STAGE_DIR}" = "private-key" ]; then
+	if [ "${STAGE}" = "private-key" ]; then
 		STAGE_WORK_DIR="${WORK_DIR}/${STAGE}-${PRIVATE_KEY_NUM}" 
 	else
 		STAGE_WORK_DIR="${WORK_DIR}/${STAGE}"
@@ -147,7 +147,7 @@ run_stage(){
 		fi
 	fi
 
-	if [ "${STAGE_DIR}" != "private-key" ]; then
+	if [ "${STAGE}" != "private-key" ]; then
 		PREV_STAGE="${STAGE}"
 		PREV_STAGE_DIR="${STAGE_DIR}"
 		PREV_ROOTFS_DIR="${ROOTFS_DIR}"
