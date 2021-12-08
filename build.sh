@@ -97,7 +97,7 @@ run_stage(){
 	pushd "${STAGE_DIR}" > /dev/null
 
 	if [ "${STAGE}" = "private-key" ]; then
-		STAGE_WORK_DIR="${WORK_DIR}/${STAGE}-${PRIVATE_KEY_NUM}" 
+		STAGE_WORK_DIR="${WORK_DIR}/${STAGE}-${PARITY_PRIVATE_KEY_NUM}" 
 	else
 		STAGE_WORK_DIR="${WORK_DIR}/${STAGE}"
 	fi
@@ -313,7 +313,7 @@ PARITY_PRIVATE_KEYS_ARRAY=($PARITY_PRIVATE_KEYS)
 
 for (( i = 0; i < "${#PARITY_PRIVATE_KEYS_ARRAY[@]}"; ++i )); do
     PARITY_PRIVATE_KEY_NUM=$i
-	PARITY_PRIVATE_KEY=$i
+	PARITY_PRIVATE_KEY="${PARITY_PRIVATE_KEYS_ARRAY[$i]}"
 	STAGE_DIR=$(realpath "private-key")
 	run_stage
 done
