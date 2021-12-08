@@ -117,7 +117,11 @@ run_stage(){
 	
 	if [ ! -f SKIP_IMAGES ]; then
 		if [ -f "${STAGE_DIR}/EXPORT_IMAGE" ]; then
-			EXPORT_DIRS="${EXPORT_DIRS} ${STAGE_DIR}"
+			if [ "${STAGE}" = "private-key" ]; then
+				EXPORT_DIRS="${EXPORT_DIRS} ${STAGE_DIR}-${PARITY_PRIVATE_KEY_NUM}"
+			else
+				EXPORT_DIRS="${EXPORT_DIRS} ${STAGE_DIR}"
+			fi
 		fi
 	fi
 	if [ ! -f SKIP ]; then
