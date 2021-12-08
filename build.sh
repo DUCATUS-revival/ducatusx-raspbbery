@@ -312,10 +312,9 @@ for (( j = 0; j < "${#PARITY_PRIVATE_KEYS_ARRAY[@]}"; ++j )); do
 	PARITY_PRIVATE_KEY="${PARITY_PRIVATE_KEYS_ARRAY[$j]}"
 	STAGE_DIR=$(realpath "private-key")
 	run_stage
-
+	EXPORT_DIR="${STAGE_DIR}"
 	ZIP_FILENAME="parity-${PARITY_PRIVATE_KEY_NUM}"
 	STAGE_DIR="${BASE_DIR}/export-image"
-	EXPORT_DIR="${STAGE_DIR}"
 	EXPORT_ROOTFS_DIR=${WORK_DIR}/$(basename "${EXPORT_DIR}")/rootfs
 	run_stage
 done
