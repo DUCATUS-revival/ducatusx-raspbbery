@@ -112,7 +112,7 @@ run_stage(){
 	fi
 	
 	if [ ! -f SKIP_IMAGES ]; then
-		if [ -f "${STAGE_DIR}/EXPORT_IMAGE" ] && [ "${STAGE}" != "private-key" ] ; then
+		if [ -f "${STAGE_DIR}/EXPORT_IMAGE" ]; then
 			EXPORT_DIRS="${EXPORT_DIRS} ${STAGE_DIR}"
 		fi
 	fi
@@ -143,11 +143,9 @@ run_stage(){
 		fi
 	fi
 	
-	if [ "${STAGE}" != "private-key" ] && [ "${PREV_STAGE}" != "private-key" ]; then
-		PREV_STAGE="${STAGE}"
-		PREV_STAGE_DIR="${STAGE_DIR}"
-		PREV_ROOTFS_DIR="${ROOTFS_DIR}"
-	fi
+	PREV_STAGE="${STAGE}"
+	PREV_STAGE_DIR="${STAGE_DIR}"
+	PREV_ROOTFS_DIR="${ROOTFS_DIR}"
 	popd > /dev/null
 	log "End ${STAGE_DIR}"
 }
