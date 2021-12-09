@@ -143,7 +143,7 @@ run_stage(){
 		fi
 	fi
 	
-	if [ "${STAGE}" != $(realpath "private-key") ]; then
+	if [ "${STAGE}" != "private-key" ] && [ "${PREV_STAGE}" != "private-key" ]; then
 		PREV_STAGE="${STAGE}"
 		PREV_STAGE_DIR="${STAGE_DIR}"
 		PREV_ROOTFS_DIR="${ROOTFS_DIR}"
