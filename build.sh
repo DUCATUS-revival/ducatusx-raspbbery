@@ -268,6 +268,7 @@ dependencies_check "${BASE_DIR}/depends"
 
 export PARITY_PRIVATE_KEY
 export PARITY_PATH_LOCAL
+export PRIVATE_KEY_NUM
 export IS_TESTNET="${IS_TESTNET:-0}"
 
 #check username is valid
@@ -298,6 +299,23 @@ STAGE_LIST=${STAGE_LIST:-${BASE_DIR}/stage*}
 
 for STAGE_DIR in $STAGE_LIST; do
 	STAGE_DIR=$(realpath "${STAGE_DIR}")
+	run_stage
+done
+
+PARITY_PRIVATE_KEYS_ARRAY=($PARITY_PRIVATE_KEYS)
+
+for (( j = 0; j < "${#PARITY_PRIVATE_KEYS_ARRAY[@]}"; ++j )); do
+	PARITY_PRIVATE_KEY_NUM=$j
+	PARITY_PRIVATE_KEY="${PARITY_PRIVATE_KEYS_ARRAY[$j]}"
+	STAGE_DIR=$(realpath "private-key")
+	CLEAN=1
+	run_stage
+	CLEAN=0
+	EXPORT_DIR="${STAGE_DIR}"
+	STAGE_DIR="${BASE_DIR}/export-image"
+	EXPORT_ROOTFS_DIR=${WORK_DIR}/$(basename "${EXPORT_DIR}")/rootfs
+	ZIP_FILENAME="ducatusx-raspbbery-${PARITY_PRIVATE_KEY_NUM}"
+	IMG_FILENAME="ducatusx-raspbbery-${PARITY_PRIVATE_KEY_NUM}"
 	run_stage
 done
 
