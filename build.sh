@@ -97,7 +97,6 @@ run_stage(){
 	pushd "${STAGE_DIR}" > /dev/null
 
 	STAGE_WORK_DIR="${WORK_DIR}/${STAGE}"
-
 	ROOTFS_DIR="${STAGE_WORK_DIR}"/rootfs
 
 	if [ "${USE_QCOW2}" = "1" ]; then 
@@ -142,7 +141,6 @@ run_stage(){
 			unmount "${WORK_DIR}/${STAGE}"
 		fi
 	fi
-	
 	PREV_STAGE="${STAGE}"
 	PREV_STAGE_DIR="${STAGE_DIR}"
 	PREV_ROOTFS_DIR="${ROOTFS_DIR}"
@@ -306,19 +304,17 @@ done
 PARITY_PRIVATE_KEYS_ARRAY=($PARITY_PRIVATE_KEYS)
 
 for (( j = 0; j < "${#PARITY_PRIVATE_KEYS_ARRAY[@]}"; ++j )); do
-    PARITY_PRIVATE_KEY_NUM=$j
+	PARITY_PRIVATE_KEY_NUM=$j
 	PARITY_PRIVATE_KEY="${PARITY_PRIVATE_KEYS_ARRAY[$j]}"
 	STAGE_DIR=$(realpath "private-key")
 	CLEAN=1
 	run_stage
+	CLEAN=0
 	EXPORT_DIR="${STAGE_DIR}"
-	
 	STAGE_DIR="${BASE_DIR}/export-image"
 	EXPORT_ROOTFS_DIR=${WORK_DIR}/$(basename "${EXPORT_DIR}")/rootfs
-
-	CLEAN=0
-	ZIP_FILENAME="parity-${PARITY_PRIVATE_KEY_NUM}"
-	IMG_FILENAME="parity-${PARITY_PRIVATE_KEY_NUM}"
+	ZIP_FILENAME="ducatusx-raspbbery-${PARITY_PRIVATE_KEY_NUM}"
+	IMG_FILENAME="ducatusx-raspbbery-${PARITY_PRIVATE_KEY_NUM}"
 	run_stage
 done
 
