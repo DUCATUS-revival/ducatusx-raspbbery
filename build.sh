@@ -271,6 +271,11 @@ export PARITY_PATH_LOCAL
 export PARITY_PRIVATE_KEY_NUM
 export IS_TESTNET="${IS_TESTNET:-0}"
 
+export AWS_DEPLOY="${AWS_DEPLOY:-0}"
+export AWS_S3_BUCKET_NAME
+export AWS_S3_BUCKET_DIR
+export AWS_CLI_PROFILE
+
 #check username is valid
 if [[ ! "$FIRST_USER_NAME" =~ ^[a-z][-a-z0-9_]*$ ]]; then
 	echo "Invalid FIRST_USER_NAME: $FIRST_USER_NAME"
