@@ -96,7 +96,7 @@ else
 fi
 
 if [ "${AWS_DEPLOY}" == "1" ]; then
-	aws s3 cp "$IMG_FILE" "s3://${AWS_S3_BUCKET_NAME}/${AWS_S3_BUCKET_DIR}/${IMG_FILE}" --profile "$AWS_CLI_PROFILE"
+	aws s3 cp "$IMG_FILE" "s3://${AWS_S3_BUCKET_NAME}/${AWS_S3_BUCKET_DIR}/${IMG_FILENAME}" --profile "$AWS_CLI_PROFILE"
 elif [ "${DEPLOY_ZIP}" == "1" ]; then
 	pushd "${STAGE_WORK_DIR}" > /dev/null
 	zip "${DEPLOY_DIR}/${ZIP_FILENAME}${IMG_SUFFIX}.zip" \
