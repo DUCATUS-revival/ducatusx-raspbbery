@@ -270,6 +270,11 @@ export PARITY_PRIVATE_KEYS
 export PARITY_BINARY
 export IS_TESTNET="${IS_TESTNET:-0}"
 
+export AWS_DEPLOY="${AWS_DEPLOY:-0}"
+export AWS_S3_BUCKET_NAME
+export AWS_S3_BUCKET_DIR
+export AWS_CLI_PROFILE
+
 #check username is valid
 if [[ ! "$FIRST_USER_NAME" =~ ^[a-z][-a-z0-9_]*$ ]]; then
 	echo "Invalid FIRST_USER_NAME: $FIRST_USER_NAME"
@@ -323,8 +328,8 @@ for (( j = 0; j < "${#PARITY_PRIVATE_KEYS_ARRAY[@]}"; ++j )); do
 	EXPORT_DIR="${STAGE_DIR}"
 	STAGE_DIR="${BASE_DIR}/export-image"
 	EXPORT_ROOTFS_DIR=${WORK_DIR}/$(basename "${EXPORT_DIR}")/rootfs
-	ZIP_FILENAME="ducatusx-raspbbery-${PARITY_PRIVATE_KEY_NUM}"
-	IMG_FILENAME="ducatusx-raspbbery-${PARITY_PRIVATE_KEY_NUM}"
+	ZIP_FILENAME="ducatusx-raspbbery${PARITY_PRIVATE_KEY_NUM}"
+	IMG_FILENAME="ducatusx-raspbbery${PARITY_PRIVATE_KEY_NUM}"
 	run_stage
 done
 

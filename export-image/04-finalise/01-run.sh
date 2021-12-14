@@ -95,7 +95,9 @@ else
 	make_bootable_image "${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.qcow2" "$IMG_FILE"
 fi
 
-if [ "${DEPLOY_ZIP}" == "1" ]; then
+if [ "${AWS_DEPLOY}" == "1" ]; then
+	aws s3 mv "$IMG_FILE" "s3://${AWS_S3_BUCKET_NAME}/${AWS_S3_BUCKET_DIR}/${IMG_FILENAME}.img" --profile "$AWS_CLI_PROFILE"
+elif [ "${DEPLOY_ZIP}" == "1" ]; then
 	pushd "${STAGE_WORK_DIR}" > /dev/null
 	zip "${DEPLOY_DIR}/${ZIP_FILENAME}${IMG_SUFFIX}.zip" \
 		"$(basename "${IMG_FILE}")"
