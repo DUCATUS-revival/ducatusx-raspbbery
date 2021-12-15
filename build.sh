@@ -184,6 +184,7 @@ term() {
 
 trap term EXIT INT TERM
 
+export IMG_NAME="DucatusxRaspbian"
 export PI_GEN=${PI_GEN:-pi-gen}
 export PI_GEN_REPO=${PI_GEN_REPO:-https://github.com/RPi-Distro/pi-gen}
 
@@ -221,7 +222,6 @@ export GIT_HASH=${GIT_HASH:-"$(git rev-parse HEAD)"}
 export PUBKEY_SSH_FIRST_USER
 
 export CLEAN
-export IMG_NAME="DucatusxRaspbian"
 export APT_PROXY
 
 export STAGE
