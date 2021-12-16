@@ -262,6 +262,7 @@ export NO_PRERUN_QCOW2="${NO_PRERUN_QCOW2:-1}"
 dependencies_check "${BASE_DIR}/depends"
 
 export PARITY_PRIVATE_KEYS
+export PARITY_PRIVATE_KEY
 export PARITY_BINARY
 export IS_TESTNET="${IS_TESTNET:-0}"
 
