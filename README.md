@@ -1,14 +1,11 @@
 # DucatusX Raspberry Pi image generator
 
-Tool used to create Raspberry Pi OS images. (Previously known as Raspbian).
+Tool used to create Raspberry Pi OS images with DucatusX node installed.
 
 
 ## Dependencies
 
-pi-gen runs on Debian-based operating systems. Currently it is only supported on
-either Debian Buster or Ubuntu Xenial and is known to have issues building on
-earlier releases of these systems. On other Linux distributions it may be possible
-to use the Docker build described below.
+pi-gen runs on Debian-based operating systems.
 
 To install the required dependencies for `pi-gen` you should run:
 
