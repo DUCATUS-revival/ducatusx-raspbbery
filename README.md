@@ -101,7 +101,7 @@ c797a611c006ed2f644bc43d2316a9a2a274f601572ce36f5379b1d0957371a5
 73dc32f7004c67e37723ad2e6592839b7ef8cb2816bb51c06ca93220c7ffd10f'
 ```
 
-The config file can also be specified on the command line as an argument the `build.sh` or `build-docker.sh` scripts.
+The config file can also be specified on the command line as an argument of the `build.sh` script.
 
 ```
 ./build.sh -c myconfig
