@@ -3,7 +3,7 @@
 mkdir -p "${ROOTFS_DIR}/etc/parity"
 mkdir -p "${ROOTFS_DIR}/etc/parity/network"
 install -m 644 files/config.toml "${ROOTFS_DIR}/etc/parity/"
-install -m 700 "${PARITY_PATH_LOCAL}" "${ROOTFS_DIR}/usr/bin/"
+install -m 700 "${PARITY_BINARY}" "${ROOTFS_DIR}/usr/bin/"
 install -m 644 files/parity.service "${ROOTFS_DIR}/etc/systemd/system/"
 
 on_chroot << EOF

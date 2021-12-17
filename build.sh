@@ -184,13 +184,9 @@ term() {
 
 trap term EXIT INT TERM
 
+export IMG_NAME="DucatusxRaspbian"
 export PI_GEN=${PI_GEN:-pi-gen}
 export PI_GEN_REPO=${PI_GEN_REPO:-https://github.com/RPi-Distro/pi-gen}
-
-if [ -z "${IMG_NAME}" ]; then
-	echo "IMG_NAME not set" 1>&2
-	exit 1
-fi
 
 export USE_QEMU="${USE_QEMU:-0}"
 export IMG_DATE="${IMG_DATE:-"$(date +%Y-%m-%d)"}"
@@ -200,7 +196,7 @@ export ZIP_FILENAME="${ZIP_FILENAME:-"image_${IMG_DATE}-${IMG_NAME}"}"
 export SCRIPT_DIR="${BASE_DIR}/scripts"
 export WORK_DIR="${WORK_DIR:-"${BASE_DIR}/work/${IMG_NAME}"}"
 export DEPLOY_DIR=${DEPLOY_DIR:-"${BASE_DIR}/deploy"}
-export DEPLOY_ZIP="${DEPLOY_ZIP:-1}"
+export DEPLOY_ZIP="${DEPLOY_ZIP:-0}"
 export LOG_FILE="${WORK_DIR}/build.log"
 
 export TARGET_HOSTNAME=${TARGET_HOSTNAME:-raspberrypi}
@@ -211,8 +207,8 @@ export RELEASE=${RELEASE:-buster}
 export WPA_ESSID
 export WPA_PASSWORD
 export WPA_COUNTRY
-export ENABLE_SSH="${ENABLE_SSH:-0}"
-export PUBKEY_ONLY_SSH="${PUBKEY_ONLY_SSH:-0}"
+export ENABLE_SSH="${ENABLE_SSH:-1}"
+export PUBKEY_ONLY_SSH="${PUBKEY_ONLY_SSH:-1}"
 
 export LOCALE_DEFAULT="${LOCALE_DEFAULT:-en_GB.UTF-8}"
 
@@ -226,7 +222,6 @@ export GIT_HASH=${GIT_HASH:-"$(git rev-parse HEAD)"}
 export PUBKEY_SSH_FIRST_USER
 
 export CLEAN
-export IMG_NAME
 export APT_PROXY
 
 export STAGE
@@ -253,7 +248,7 @@ source "${SCRIPT_DIR}/common"
 source "${SCRIPT_DIR}/dependencies_check"
 
 export NO_PRERUN_QCOW2="${NO_PRERUN_QCOW2:-1}"
-export USE_QCOW2="${USE_QCOW2:-1}"
+export USE_QCOW2="${USE_QCOW2:-0}"
 export BASE_QCOW2_SIZE=${BASE_QCOW2_SIZE:-12G}
 source "${SCRIPT_DIR}/qcow2_handling"
 if [ "${USE_QCOW2}" = "1" ]; then
@@ -266,9 +261,9 @@ export NO_PRERUN_QCOW2="${NO_PRERUN_QCOW2:-1}"
 
 dependencies_check "${BASE_DIR}/depends"
 
+export PARITY_PRIVATE_KEYS
 export PARITY_PRIVATE_KEY
-export PARITY_PATH_LOCAL
-export PARITY_PRIVATE_KEY_NUM
+export PARITY_BINARY
 export IS_TESTNET="${IS_TESTNET:-0}"
 
 export AWS_DEPLOY="${AWS_DEPLOY:-0}"
@@ -297,10 +292,20 @@ if [[ "${PUBKEY_ONLY_SSH}" = "1" && -z "${PUBKEY_SSH_FIRST_USER}" ]]; then
 	exit 1
 fi
 
+if [ -z "${PARITY_PRIVATE_KEYS}" ]; then
+	echo "PARITY_PRIVATE_KEYS not set" 1>&2
+	exit 1
+fi
+
+if [ -z "${PARITY_BINARY}" ]; then
+	echo "PARITY_BINARY not set" 1>&2
+	exit 1
+fi
+
 mkdir -p "${WORK_DIR}"
 log "Begin ${BASE_DIR}"
 
-STAGE_LIST=${STAGE_LIST:-${BASE_DIR}/stage*}
+STAGE_LIST=${STAGE_LIST:-"stage0 stage1 stage2"}
 
 for STAGE_DIR in $STAGE_LIST; do
 	STAGE_DIR=$(realpath "${STAGE_DIR}")
@@ -308,14 +313,12 @@ for STAGE_DIR in $STAGE_LIST; do
 done
 
 PARITY_PRIVATE_KEYS_ARRAY=($PARITY_PRIVATE_KEYS)
-
+CLEAN=1
 for (( j = 0; j < "${#PARITY_PRIVATE_KEYS_ARRAY[@]}"; ++j )); do
 	PARITY_PRIVATE_KEY_NUM=$j
 	PARITY_PRIVATE_KEY="${PARITY_PRIVATE_KEYS_ARRAY[$j]}"
 	STAGE_DIR=$(realpath "private-key")
-	CLEAN=1
 	run_stage
-	CLEAN=0
 	EXPORT_DIR="${STAGE_DIR}"
 	STAGE_DIR="${BASE_DIR}/export-image"
 	EXPORT_ROOTFS_DIR=${WORK_DIR}/$(basename "${EXPORT_DIR}")/rootfs
@@ -324,7 +327,6 @@ for (( j = 0; j < "${#PARITY_PRIVATE_KEYS_ARRAY[@]}"; ++j )); do
 	run_stage
 done
 
-CLEAN=1
 for EXPORT_DIR in ${EXPORT_DIRS}; do
 	STAGE_DIR=${BASE_DIR}/export-image
 	# shellcheck source=/dev/null
