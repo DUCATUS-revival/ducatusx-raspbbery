@@ -38,6 +38,10 @@ The following environment variables are supported:
 
    Path to parity binary file. Can be generated with https://github.com/Rock-n-Block/parity-aarch64-builder
 
+ * `IS_TESTNET` (Default: `0`)
+
+   Setting to `1` will deploy DucatusX testnet node
+
  * `IMG_NAME` (Default: `"DucatusxRaspbian"`)
 
    The name of the image to build with the current stage directories.  Setting
@@ -69,16 +73,15 @@ The following environment variables are supported:
 
    Setting to `1` will enable ssh server for remote log in. Note that if you are using a common password such as the defaults there is a high risk of attackers taking over you Raspberry Pi.
 
-  * `PUBKEY_SSH_FIRST_USER` (Default: unset)
+ * `PUBKEY_SSH_FIRST_USER` (Default: unset)
+ 
    Setting this to a value will make that value the contents of the FIRST_USER_NAME's ~/.ssh/authorized_keys.  Obviously the value should
    therefore be a valid authorized_keys file.  Note that this does not
    automatically enable SSH.
 
   * `PUBKEY_ONLY_SSH` (Default: `1`)
-
-   * Setting to `1` will disable password authentication for SSH and enable
-   public key authentication.  Note that if SSH is not enabled this will take
-   effect when SSH becomes enabled.
+  
+    Setting to `1` will disable password authentication for SSH and enable public key authentication.  Note that if SSH is not enabled this will take effect when SSH becomes enabled.
 
  * `STAGE_LIST` (Default: `"stage0 stage1 stage2"`)
 
@@ -87,7 +90,18 @@ The following environment variables are supported:
 A simple example for building Raspbian:
 
 ```bash
-IMG_NAME='Raspbian'
+PUBKEY_SSH_FIRST_USER='ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDrQ0RaIdjcFB7IPkcTTeSpfiCdp9XRoFxNwalVvz/w8FWEs4AArRdnOz/qazsL7OQ6vD9Jxdk05VNrsYJdgNRp1tqpVTfReFwjHkSpKrcb6bN8unccUt6/kBjdfrtWMXQsZB2ArTlOeCRn2GT4Kq5MR0vproQ+Kh1AjtOrnuWolKcYEodDRGSUwMOs4Y4XczxD7XzAX3TWMAPwHkyaXTpjndoAUodIyQV+xO9gfwKRD9Opm4KUbIW2t1vhilicWay+xmbckaANnHO4dTLNrU7ze9lAD0YPiscIWadOIv1180c7DOClB4uiOqZZ6MYjYpE6ILz/SoC/n6yEnN13b37/fOdB+TjaqWs1e/3OG6S69N95yXxIN5DS4ew8YdZd5mneBr1d/K9yUclXHijbi2dp57eQ2jhAl34DXL9zDm6aKBylSMymi274LZMa1QrPMErh1z9gCeovqjwvTlv3toNpQWuShdyYkN3XsoV/8tiTyZ+F0am77wy1KjJcK/ywids='
+
+AWS_DEPLOY=1
+AWS_S3_BUCKET_NAME=my-raspberry-images
+AWS_S3_BUCKET_DIR=debug
+AWS_CLI_PROFILE=main
+
+PARITY_BINARY=/home/ubuntu/parity-aarch64-builder/parity
+PARITY_PRIVATE_KEYS='b233ca35bc9b3884ccd255a290bab0476eb07fcdab541dac9d990ec13bde1179
+c797a611c006ed2f644bc43d2316a9a2a274f601572ce36f5379b1d0957371a5
+8aed43f1ff4b962263e349b3fee4c0564570229980bbaec9121689b3fc7b5292
+73dc32f7004c67e37723ad2e6592839b7ef8cb2816bb51c06ca93220c7ffd10f'
 ```
 
 The config file can also be specified on the command line as an argument the `build.sh` or `build-docker.sh` scripts.
