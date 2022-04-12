@@ -1,0 +1,15 @@
+[Unit]
+Description=Balena's wifi-connect service
+After=NetworkManager.service
+
+[Service]
+Type=simple
+ExecStart=/etc/wifi-connect/start.sh
+Restart=on-failure
+StandardOutput=syslog
+SyslogIdentifier=wifi-connect
+Type=idle
+User=root
+
+[Install]
+WantedBy=multi-user.target
