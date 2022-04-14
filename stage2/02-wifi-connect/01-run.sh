@@ -5,15 +5,12 @@ install -m 700 scripts/start.sh "${ROOTFS_DIR}/etc/wifi-connect/"
 install -m 644 files/wifi-connect.service "${ROOTFS_DIR}/etc/systemd/system/"
 
 on_chroot << EOF
-local _wfc_repo='balena-os/wifi-connect'
-local _wfc_install_root='/usr/local'
-local _install_bin_dir="$_wfc_install_root/sbin"
-local _install_ui_dir="$_wfc_install_root/share/wifi-connect/ui"
-local _release_url="https://api.github.com/repos/$_wfc_repo/releases/latest"
-local _regex='browser_download_url": "\K.*aarch64\.tar\.gz'
-local _arch_url
-local _wfc_version
-local _download_dir
+_wfc_repo='balena-os/wifi-connect'
+_wfc_install_root='/usr/'
+_install_bin_dir="$_wfc_install_root/sbin"
+_install_ui_dir="$_wfc_install_root/share/wifi-connect/ui"
+_release_url="https://api.github.com/repos/$_wfc_repo/releases/latest"
+_regex='browser_download_url": "\K.*aarch64\.tar\.gz'
 
 echo "Retrieving latest release from $_release_url..."
 
