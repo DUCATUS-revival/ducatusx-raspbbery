@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 WFC_REPO='balena-os/wifi-connect'
-WFC_INSTALL_ROOT='${ROOTFS_DIR}/usr/local'
+WFC_INSTALL_ROOT="${ROOTFS_DIR}/usr/local"
 NAME='WiFi Connect Raspbian Installer'
 
 INSTALL_BIN_DIR="$WFC_INSTALL_ROOT/sbin"
@@ -38,7 +38,7 @@ install_wfc() {
     ensure install -d "${ROOTFS_DIR}/etc/wifi-connect"
     ensure install -m 700 scripts/start.sh "${ROOTFS_DIR}/etc/wifi-connect/"
     ensure install -m 644 files/wifi-connect.service "${ROOTFS_DIR}/etc/systemd/system/"
-    ensure rm -rdf "$_download_dir"
+    #ensure rm -rdf "$_download_dir"
     say "Successfully installed"
 }
 
