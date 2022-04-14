@@ -1,36 +1,57 @@
 #!/bin/bash -e
 
-install -v -d					"${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d"
-install -v -m 644 files/wait.conf		"${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d/"
+install_wfc() {
+    local _wfc_repo='balena-os/wifi-connect'
+    local _wfc_install_root='/usr/local'
+    local _install_bin_dir="$_wfc_install_root/sbin"
+    local _install_ui_dir="$_wfc_install_root/share/wifi-connect/ui"
+    local _release_url="https://api.github.com/repos/$_wfc_repo/releases/latest"
+    local _regex='browser_download_url": "\K.*aarch64\.tar\.gz'
+    local _arch_url
+    local _wfc_version
+    local _download_dir
 
-install -v -d					"${ROOTFS_DIR}/etc/wpa_supplicant"
-install -v -m 600 files/wpa_supplicant.conf	"${ROOTFS_DIR}/etc/wpa_supplicant/"
+    say "Retrieving latest release from $_release_url..."
 
-if [ -v WPA_COUNTRY ]; then
-	echo "country=${WPA_COUNTRY}" >> "${ROOTFS_DIR}/etc/wpa_supplicant/wpa_supplicant.conf"
-fi
+    _arch_url=$(ensure curl "$_release_url" -s | grep -hoP "$_regex")
 
-if [ -v WPA_ESSID ] && [ -v WPA_PASSWORD ]; then
-on_chroot <<EOF
-set -o pipefail
-wpa_passphrase "${WPA_ESSID}" "${WPA_PASSWORD}" | tee -a "/etc/wpa_supplicant/wpa_supplicant.conf"
-EOF
-elif [ -v WPA_ESSID ]; then
-cat >> "${ROOTFS_DIR}/etc/wpa_supplicant/wpa_supplicant.conf" << EOL
+    say "Downloading and extracting $_arch_url..."
 
-network={
-	ssid="${WPA_ESSID}"
-	key_mgmt=NONE
+    _download_dir=$(ensure mktemp -d)
+
+    ensure curl -Ls "$_arch_url" | tar -xz -C "$_download_dir"
+
+    ensure sudo mv "$_download_dir/wifi-connect" $_install_bin_dir
+
+    ensure sudo mkdir -p $_install_ui_dir
+
+    ensure sudo rm -rdf $_install_ui_dir
+
+    ensure sudo mv "$_download_dir/ui" $_install_ui_dir
+
+    ensure rm -rdf "$_download_dir"
+
+    _wfc_version=$(ensure wifi-connect --version)
+
+    say "Successfully installed $_wfc_version"
 }
-EOL
-fi
 
-# Disable wifi on 5GHz models if WPA_COUNTRY is not set
-mkdir -p "${ROOTFS_DIR}/var/lib/systemd/rfkill/"
-if [ -n "$WPA_COUNTRY" ]; then
-    echo 0 > "${ROOTFS_DIR}/var/lib/systemd/rfkill/platform-3f300000.mmcnr:wlan"
-    echo 0 > "${ROOTFS_DIR}/var/lib/systemd/rfkill/platform-fe300000.mmcnr:wlan"
-else
-    echo 1 > "${ROOTFS_DIR}/var/lib/systemd/rfkill/platform-3f300000.mmcnr:wlan"
-    echo 1 > "${ROOTFS_DIR}/var/lib/systemd/rfkill/platform-fe300000.mmcnr:wlan"
-fi
+say() {
+    printf '\33[1m%s:\33[0m %s\n' "WiFi Connect Raspbian Installer" "$1"
+}
+
+ensure() {
+    "$@"
+    if [ $? != 0 ]; then
+        err "command failed: $*";
+    fi
+}
+
+mkdir -p "${ROOTFS_DIR}/etc/wifi-connect"
+install -m 700 scripts/start.sh "${ROOTFS_DIR}/etc/wifi-connect/"
+install -m 644 files/wifi-connect.service "${ROOTFS_DIR}/etc/systemd/system/"
+
+on_chroot << EOF
+install_wfc
+systemctl enable wifi-connect
+EOF
