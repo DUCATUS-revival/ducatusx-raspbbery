@@ -5,7 +5,7 @@ WFC_INSTALL_ROOT="${ROOTFS_DIR}/usr/local"
 NAME='WiFi Connect Raspbian Installer'
 
 INSTALL_BIN_DIR="$WFC_INSTALL_ROOT/sbin"
-INSTALL_UI_DIR="$WFC_INSTALL_ROOT/share/wifi-connect/ui"
+INSTALL_UI_DIR="$WFC_INSTALL_ROOT/share/wifi-connect"
 
 RELEASE_URL="https://api.github.com/repos/$WFC_REPO/releases/latest"
 
@@ -54,3 +54,7 @@ ensure() {
 }
 
 main "$@" || exit 1
+
+on_chroot << EOF
+systemctl enable wifi-connect
+EOF

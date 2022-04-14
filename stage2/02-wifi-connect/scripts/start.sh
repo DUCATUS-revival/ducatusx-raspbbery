@@ -18,5 +18,5 @@ if [ $? -eq 0 ]; then
     printf 'Skipping WiFi Connect\n'
 else
     printf 'Starting WiFi Connect\n'
-    wifi-connect --portal-ssid DucatusX RPi
+    wifi-connect --portal-ssid DucatusX-RPi
 fi
