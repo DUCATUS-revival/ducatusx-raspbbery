@@ -31,9 +31,10 @@ install_wfc() {
 
     ensure curl -Ls "$_arch_url" | tar -xz -C "$_download_dir"
 
+    ensure install -d $INSTALL_BIN_DIR
     ensure install -m 700 "$_download_dir/wifi-connect" $INSTALL_BIN_DIR
     ensure install -d $INSTALL_UI_DIR
-    ensure mv "$_download_dir/ui/*" $INSTALL_UI_DIR
+    ensure mv "$_download_dir/ui" $INSTALL_UI_DIR
     ensure install -d "${ROOTFS_DIR}/etc/wifi-connect"
     ensure install -m 700 scripts/start.sh "${ROOTFS_DIR}/etc/wifi-connect/"
     ensure install -m 644 files/wifi-connect.service "${ROOTFS_DIR}/etc/systemd/system/"
