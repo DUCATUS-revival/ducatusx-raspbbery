@@ -38,7 +38,7 @@ install_wfc() {
     ensure install -d "${ROOTFS_DIR}/etc/wifi-connect"
     ensure install -m 700 scripts/start.sh "${ROOTFS_DIR}/etc/wifi-connect/"
     ensure install -m 644 files/wifi-connect.service "${ROOTFS_DIR}/etc/systemd/system/"
-    #ensure rm -rdf "$_download_dir"
+    ensure rm -rdf "$_download_dir"
     say "Successfully installed"
 }
 
