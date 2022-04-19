@@ -263,7 +263,8 @@ dependencies_check "${BASE_DIR}/depends"
 
 export PARITY_PRIVATE_KEYS
 export PARITY_PRIVATE_KEY
-export PARITY_BINARY
+export PARITY_BINARY_DIR
+export PARITY_BINARY_NAME
 export IS_TESTNET="${IS_TESTNET:-0}"
 
 export AWS_DEPLOY="${AWS_DEPLOY:-0}"
@@ -297,8 +298,13 @@ if [ -z "${PARITY_PRIVATE_KEYS}" ]; then
 	exit 1
 fi
 
-if [ -z "${PARITY_BINARY}" ]; then
-	echo "PARITY_BINARY not set" 1>&2
+if [ -z "${PARITY_BINARY_DIR}" ]; then
+	echo "PARITY_BINARY_DIR not set" 1>&2
+	exit 1
+fi
+
+if [ -z "${PARITY_BINARY_NAME}" ]; then
+	echo "PARITY_BINARY_NAME not set" 1>&2
 	exit 1
 fi
 

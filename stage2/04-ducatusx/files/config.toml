@@ -4,7 +4,6 @@ chain = "/etc/parity/spec.json"
 db_path = "/etc/parity/chains"
 keys_path = "/etc/parity/keys"
 identity = ""
-light = false
 
 [network]
 allow_ips = "public"
@@ -14,7 +13,7 @@ port = 30300
 interface = "all"
 cors = ["all"]
 port = 8545
-apis = ["web3", "eth", "net", "personal", "parity", "parity_pubsub", "shh", "shh_pubsub", "parity_set", "traces", "rpc", "parity_accounts", "pubsub"]
+apis = ["web3", "eth", "net", "personal", "parity", "parity_pubsub", "parity_set", "traces", "rpc", "parity_accounts", "pubsub"]
 
 [websockets]
 apis = ["web3", "eth", "net", "personal", "parity", "parity_set", "traces", "rpc", "parity_accounts", "pubsub"]

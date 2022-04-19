@@ -31,9 +31,13 @@ The following environment variables are supported:
 
    List of parity workers private keys.
 
- * `PARITY_BINARY` **required** (Default: unset)
+ * `PARITY_BINARY_DIR` **required** (Default: unset)
 
-   Path to parity binary file. Can be generated with https://github.com/Rock-n-Block/parity-aarch64-builder
+   Directory of parity binary file
+
+ * `PARITY_BINARY_NAME` **required** (Default: unset)
+
+   Parity binary file name. Can be generated with https://github.com/Rock-n-Block/parity-aarch64-builder
 
  * `IS_TESTNET` (Default: `0`)
 
@@ -94,7 +98,8 @@ AWS_S3_BUCKET_NAME=my-raspberry-images
 AWS_S3_BUCKET_DIR=debug
 AWS_CLI_PROFILE=main
 
-PARITY_BINARY=/home/ubuntu/parity-aarch64-builder/parity
+PARITY_BINARY_DIR=/home/ubuntu/parity-aarch64-builder
+PARITY_BINARY_NAME=parity
 PARITY_PRIVATE_KEYS='b233ca35bc9b3884ccd255a290bab0476eb07fcdab541dac9d990ec13bde1179
 c797a611c006ed2f644bc43d2316a9a2a274f601572ce36f5379b1d0957371a5
 8aed43f1ff4b962263e349b3fee4c0564570229980bbaec9121689b3fc7b5292
