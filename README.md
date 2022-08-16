@@ -105,12 +105,15 @@ c797a611c006ed2f644bc43d2316a9a2a274f601572ce36f5379b1d0957371a5
 8aed43f1ff4b962263e349b3fee4c0564570229980bbaec9121689b3fc7b5292
 73dc32f7004c67e37723ad2e6592839b7ef8cb2816bb51c06ca93220c7ffd10f'
 ```
-
+## Run
 The config file can also be specified on the command line as an argument of the `build.sh` script.
+
 
 ```
 ./build.sh -c myconfig
 ```
 
 This is parsed after `config` so can be used to override values set there.
+
+Please run `build.sh` with sudo!
 
