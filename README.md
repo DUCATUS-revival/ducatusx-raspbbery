@@ -110,10 +110,16 @@ The config file can also be specified on the command line as an argument of the 
 
 
 ```
-./build.sh -c myconfig
+sudo ./build.sh -c myconfig
 ```
 
 This is parsed after `config` so can be used to override values set there.
 
-Please run `build.sh` with sudo!
+Always run `build.sh` with sudo!
+
+## Troubleshooting
+Every time before starting a new generation (or after an error occurs), clear the entire generator cache.
+```
+sudo rm -rf work deploy.
+```
 
