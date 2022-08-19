@@ -9,9 +9,9 @@ install -m 644 files/parity.service "${ROOTFS_DIR}/etc/systemd/system/"
 
 on_chroot << EOF
 if [ "${IS_TESTNET}" == "1" ]; then
-	curl -o /etc/parity/spec.json  https://raw.githubusercontent.com/DucatusX/ducatusx/master/chain.testnet.json
+	curl -o /etc/parity/spec.json  https://raw.githubusercontent.com/DucatusX/ducatusx/master/configs/testnet/chain.json
 else
-	curl -o /etc/parity/spec.json  https://raw.githubusercontent.com/DucatusX/ducatusx/master/chain.mainnet.json
+	curl -o /etc/parity/spec.json  https://raw.githubusercontent.com/DucatusX/ducatusx/master/configs/mainnet/chain.json
 fi
 
 systemctl enable parity
